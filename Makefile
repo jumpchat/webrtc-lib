@@ -30,8 +30,7 @@ GN=${WEBRTC_ROOT}/depot_tools/gn
 NINJA=${WEBRTC_ROOT}/depot_tools/ninja
 TAR=tar
 BASH=bash
-OLD_PATH=$(shell echo $$PATH)
-export PATH=${WEBRTC_ROOT}/depot_tools:${OLD_PATH}
+export PATH:=${WEBRTC_ROOT}/depot_tools:/usr/bin:${PATH}
 
 UNAME_S := $(shell uname -s)
 ifeq ($(OS),Windows_NT)
