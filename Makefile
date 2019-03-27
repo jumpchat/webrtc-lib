@@ -30,6 +30,7 @@ GN=${WEBRTC_ROOT}/depot_tools/gn
 NINJA=${WEBRTC_ROOT}/depot_tools/ninja
 TAR=tar
 BASH=bash
+RSYNC=rsync
 export PATH:=${WEBRTC_ROOT}/depot_tools:/usr/bin:${PATH}
 
 UNAME_S := $(shell uname -s)
@@ -41,6 +42,7 @@ ifeq ($(OS),Windows_NT)
 	GN=${WEBRTC_ROOT}/depot_tools/gn.bat
 	NINJA=${WEBRTC_ROOT}/depot_tools/ninja.exe
 	TAR=$(subst \,/,${HOME}/scoop/shims/tar.exe)
+	RSYNC=$(subst \,/,${HOME}/scoop/apps/msys/current/bin/rsync.exe)
 	ifeq ($(DEBUG),true)
 		WEBRTC_LIBNAME=webrtcd.lib
 	else
@@ -166,16 +168,16 @@ webrtc_headers: ${WEBRTC_BUILDDIR}/include/rtc_base ${WEBRTC_BUILDDIR}/include/j
 ${WEBRTC_BUILDDIR}/include/rtc_base:
 	mkdir -p ${WEBRTC_BUILDDIR}/rtc_base
 	cd ${WEBRTC_BUILDDIR} && \
-		rsync -avm --include '*.h' -f 'hide,! */' src/api src/rtc_base src/pc src/media src/modules src/p2p src/call src/common_video src/common_audio src/logging src/system_wrappers src/*.h include/
+		${RSYNC} -avm --include '*.h' -f 'hide,! */' src/api src/rtc_base src/pc src/media src/modules src/p2p src/call src/common_video src/common_audio src/logging src/system_wrappers src/*.h include/
 ${WEBRTC_BUILDDIR}/include/json:
 	cd ${WEBRTC_BUILDDIR} && \
-		rsync -avm --include '*.h' -f 'hide,! */' src/third_party/jsoncpp/source/include/json include/
+		${RSYNC} -avm --include '*.h' -f 'hide,! */' src/third_party/jsoncpp/source/include/json include/
 ${WEBRTC_BUILDDIR}/include/absl:
 	cd ${WEBRTC_BUILDDIR} && \
-		rsync -avm --include '*.h' -f 'hide,! */' src/third_party/abseil-cpp/absl include/
+		${RSYNC} -avm --include '*.h' -f 'hide,! */' src/third_party/abseil-cpp/absl include/
 ${WEBRTC_BUILDDIR}/include/libyuv:
 	cd ${WEBRTC_BUILDDIR} && \
-		rsync -avm --include '*.h' -f 'hide,! */' src/third_party/libyuv/include/libyuv include/
+		${RSYNC} -avm --include '*.h' -f 'hide,! */' src/third_party/libyuv/include/libyuv include/
 
 webrtc_tarball: ${WEBRTC_TARBALL}
 ${WEBRTC_TARBALL}: ${WEBRTC_LIB} ${WEBRTC_BUILDDIR}/include/webrtc ${WEBRTC_BUILDDIR}/include/json

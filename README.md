@@ -8,7 +8,7 @@ Build for Windows
     * Install Visual Studio 2015
     * Install [scoop](http://scoop.sh/)
     ```
-    % scoop install busybox git make rsync tar xz
+    % scoop install busybox git make msys tar xz
     % scoop reset tar
     % scoop reset xz
     ```
